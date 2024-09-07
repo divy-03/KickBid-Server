@@ -1,4 +1,6 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import { Request, Response } from "express";  // Keep this named import if needed
+
 const app = express();
 
 app.get("/", (req: Request, res: Response) => {
