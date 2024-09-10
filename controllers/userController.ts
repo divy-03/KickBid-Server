@@ -21,7 +21,7 @@ export const registerUser = catchAsyncError(
     const secPass = await bcryptjs.hash(password, salt);
 
     const user = await User.create({ name, email, password: secPass });
-    return sendToken(user.id, 201, res);
+    return sendToken(user.id.toString(), 201, res);
   }
 );
 
