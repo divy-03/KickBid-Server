@@ -10,7 +10,7 @@ import userRoute from "./routes/userRoute";
 
 app.use(
   cors({
-    origin: process.env.CLIENT_BASE_URL || "http://localhost:5173", // Replace with your client URL
+    origin: process.env.CLIENT_BASE_URL || "http://localhost:5173",
     credentials: true,
   })
 );
@@ -19,12 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(cookieParser());
-app.use(errorMid);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ hello: "Hello World" });
 });
 
 app.use("/api", userRoute);
+
+app.use(errorMid);
 
 export default app;
