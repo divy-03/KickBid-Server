@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 
-module.exports =
-  (theFunc: CallableFunction) =>
-  (req: Request, res: Response, next: NextFunction) => {
+const catchAsyncError = (theFunc: CallableFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     Promise.resolve(theFunc(req, res, next)).catch(next);
   };
+};
+
+export default catchAsyncError;
