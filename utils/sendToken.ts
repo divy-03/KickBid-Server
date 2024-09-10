@@ -19,9 +19,11 @@ const sendToken = async (id: string, statusCode: number, res: Response) => {
       Date.now() + Number(process.env.COOKIE_EXPIRE || 1) * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set properly based on environment
+    secure: process.env.NODE_ENV === "production", // Secure should be true in production
+    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Properly set based on environment
+    path: "/", // Ensure the cookie is accessible on all paths
   };
+  
 
   // Set the cookie with the JWT token
   res.cookie("kToken", authToken, options);
