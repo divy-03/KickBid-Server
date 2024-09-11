@@ -1,4 +1,4 @@
-import { CookieOptions, Response } from "express";
+import { Response } from "express";
 import jwt from "jsonwebtoken"; // Changed to ES6 import
 
 const sendToken = async (id: string, statusCode: number, res: Response) => {
@@ -14,19 +14,17 @@ const sendToken = async (id: string, statusCode: number, res: Response) => {
   });
 
   // Set cookie options
-  const options: CookieOptions = {
+  const options = {
     expires: new Date(
       Date.now() + Number(process.env.COOKIE_EXPIRE || 1) * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Ensure secure is true if in production
-    sameSite: "none", // Set as "none" (lowercase) for cross-origin requests
+    secure: process.env.NODE_ENV === "production",
+    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Set properly based on environment
   };
-  
-  
+
   // Set the cookie with the JWT token
   res.cookie("kToken", authToken, options);
-  
 
   // Return the response
   return res.status(statusCode).json({
